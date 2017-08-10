@@ -29,7 +29,9 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 //    [self selectionSort];
 //    [self bubbleSort];
-    [self insertSort];
+//    [self insertSort];
+    
+    [self quick_sort];
 }
 
 /**
@@ -131,6 +133,38 @@
     NSInteger i = 0;
     NSInteger j = (arr.count - 1);
     
+    [self quick_sortWithArray:arr leftIndex:i rightIndex:j];
+    
+    NSLog(@"%@", arr);
+    
+}
+
+- (void)quick_sortWithArray:(NSMutableArray *)arr leftIndex:(NSInteger)leftIndex rightIndex:(NSInteger)rightIndex {
+    if (leftIndex >= rightIndex) {
+        return;
+    }
+    // 拿到分治索引
+    NSInteger partIndex = [self partArray:arr leftIndex:leftIndex rightIndex:rightIndex];
+    
+    // 左边递归快排
+    [self quick_sortWithArray:arr leftIndex:leftIndex rightIndex:partIndex - 1];
+    
+    // 右边递归快排
+    [self quick_sortWithArray:arr leftIndex:partIndex + 1 rightIndex:rightIndex];
+    
+}
+/**
+ 将数组分治
+
+ @param arr 数组
+ @param left 左边索引
+ @param right 右边索引
+ @return 分治的位置
+ */
+- (NSInteger)partArray:(NSMutableArray *)arr leftIndex:(NSInteger)left rightIndex:(NSInteger)right {
+    NSInteger i = left;
+    NSInteger j = right;
+    
     NSInteger x = [arr[i] integerValue];// 第一个坑
     
     while (i < j) {
@@ -151,10 +185,12 @@
         
         if (i < j) {
             arr[j] = arr[i];
+            j--;
         }
-        
     }
     
+    arr[i] = @(x);
+    return i;
     
 }
 @end
