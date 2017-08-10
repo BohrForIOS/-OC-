@@ -111,4 +111,50 @@
     NSLog(@"%@", arr);
 }
 
+
+/**
+ 快排
+ 
+ 对挖坑填数进行总结
+ 
+ 1．i =L; j = R; 将基准数挖出形成第一个坑a[i]。
+ 
+ 2．j--由后向前找比它小的数，找到后挖出此数填前一个坑a[i]中。
+ 
+ 3．i++由前向后找比它大的数，找到后也挖出此数填到前一个坑a[j]中。
+ 
+ 4．再重复执行2，3二步，直到i==j，将基准数填入a[i]中。
+ */
+- (void)quick_sort {
+    NSMutableArray *arr = [NSMutableArray arrayWithObjects:@(1),@(4),@(2),@(3),@(6),@(5), nil];
+    
+    NSInteger i = 0;
+    NSInteger j = (arr.count - 1);
+    
+    NSInteger x = [arr[i] integerValue];// 第一个坑
+    
+    while (i < j) {
+        // 从后往前找到小于x的数，填到arr[i]坑里
+        while (i < j && x < [arr[j] integerValue]) {
+            j--;
+        }
+        
+        if (i < j) {
+            arr[i] = arr[j];// 形成一个新坑
+            i++;
+        }
+        
+        //从前往后找到比x大的数，填到arr[j]坑里
+        while (i < j && [arr[i] integerValue] < x) {
+            i++;
+        }
+        
+        if (i < j) {
+            arr[j] = arr[i];
+        }
+        
+    }
+    
+    
+}
 @end
